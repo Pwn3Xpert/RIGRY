@@ -1,0 +1,6 @@
+# view AndroidManifest.xml #generated:30
+-keep class com.rigry.MainActivity { <init>(...); }
+
+# view AndroidManifest.xml #generated:21
+-keep class com.rigry.SplashActivity { <init>(...); }
+
