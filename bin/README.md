@@ -23,6 +23,6 @@ RHVoice -ის დაყენების შემდეგ ჩამოტ�
 
 ---------------------------
 
-![#Screenshot3]()
+![#Screenshot3](https://github.com/Kuduxaaa/RIGRY-Private/blob/main/bin/Screenshots/Screenshot_20210402-134644_RIGRY.jpg)
 
 ### გისურვებთ წარმატებებს
