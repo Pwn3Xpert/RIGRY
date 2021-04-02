@@ -6,8 +6,8 @@ AIML stands for Artificial Intelligence Modelling Language. AIML is an XML based
 
 The most important units of AIML are:
 
-- <aiml>: the tag that begins and ends an AIML document
-- <category>: the tag that marks a “unit of knowledge” in an Alicebot’s knowledge base
-- <pattern>: used to contain a simple pattern that matches what a user may say or type to an ALICE bot
-- <template>: contains the response to a user input
+- `<aiml>`: the tag that begins and ends an AIML document
+- `<category>`: the tag that marks a “unit of knowledge” in an Alicebot’s knowledge base
+- `<pattern>`: used to contain a simple pattern that matches what a user may say or type to an ALICE bot
+- `<template>`: contains the response to a user input
 
