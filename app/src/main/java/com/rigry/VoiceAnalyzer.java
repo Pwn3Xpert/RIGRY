@@ -1,8 +1,16 @@
 package com.rigry;
+
+
 import android.content.Context;
 import android.content.Intent;
 import android.speech.tts.TextToSpeech;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Locale;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class VoiceAnalyzer {
     
@@ -20,9 +28,9 @@ public class VoiceAnalyzer {
     public void run(String text)
 	{
 		
-		if (text.contains("ინფორმაცია "))
+		if (text.contains("რა არის "))
 		{
-			String[] splited = text.split("ინფორმაცია ");
+			String[] splited = text.split("რა არის ");
 			info.wikipedia(splited[1], context, new InfoBaseCallback(){
 				@Override
 				public void onSuccess(String result)
@@ -33,18 +41,8 @@ public class VoiceAnalyzer {
 		}
 		else
 		{
-			if (text.equals("გამარჯობა"))
-			{
-				Speak("გაგიმარჯოს");
-			}
-			else if (text.equals("მესენჯერი"))
-			{
-				launch("com.facebook.orca");
-			}
-			else
-			{
-				Speak("უკაცრავად");
-			}
+			String response = geeciPasuxi(text);
+            Speak(response);
 		}
 	}
     
@@ -81,6 +79,79 @@ public class VoiceAnalyzer {
 			System.out.println("საჭიროა ინიციალიზაცია");
 		}
 	}
+    
+    @Override
+    public JSONObject jsonObj;
+    public JSONObject getData()
+    {
+        try
+        {
+            InputStream is = context.getAssets().open("data.json");
+            
+            int size = is.available();
+            byte[] buffer = new byte[size];
+            is.read(buffer);
+            is.close();
+            
+            String jsonStr = new String(buffer, "UTF-8");
+            
+            try
+            {
+                jsonObj = new JSONObject(jsonStr);
+            } catch (JSONException e) 
+            {
+                e.printStackTrace();
+            }
+            
+        } catch (IOException e) 
+        {
+            e.printStackTrace();
+        }
+        
+        return jsonObj;
+    }
+    
+    @Override
+    public JSONObject data;
+    public String answer;
+    public String geeciPasuxi(String question)
+    {
+        data = getData();
+        if (data != null)
+        {
+            if (data.has(question))
+            {
+                try 
+                {
+                    // answer = data.getString(question);
+                    Object obj = data.get(question);
+                    if (obj instanceof JSONArray)
+                    {
+                        JSONArray dataArr = (JSONArray) obj;
+                        int randIndex = ThreadLocalRandom.current().nextInt(0,dataArr.length());
+                        answer = (String) dataArr.get(randIndex);
+                    }
+                    else
+                    {
+                        answer = obj.toString();
+                    }
+                    
+                } catch (JSONException e) 
+                {
+                    e.printStackTrace();
+                }
+            } 
+            else
+            {
+                answer = "უკაცრავად";
+            }
+        }
+        
+        return answer;
+    }
+    
+    
+    
 }
 
 
